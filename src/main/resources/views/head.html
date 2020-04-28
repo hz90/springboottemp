@@ -1,0 +1,159 @@
+<!--此页面用于放置页面的公共片段（fragment）-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="static">
+    <!-- css样式 -->
+    <head>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+
+    <!-- 引入公用库 -->
+    <head>
+    <link rel="stylesheet" th:href="@{/bootstrap/4.3.1/css/bootstrap.css}" >
+    <link rel="stylesheet" th:href="@{/bootstrap/4.3.1/css/bootstrap.min.css}" >
+    <link rel="stylesheet" th:href="@{/css/fontawesome/css/all.css}" >
+    <link rel="stylesheet" th:href="@{/css/fontawesome/css/all.min.css}" >
+    <link rel="stylesheet" th:href="@{/css/googleapis.css}" >
+       <link rel="stylesheet" href="../css/spur.css" th:href="@{/css/spur.css}">
+         <script  type="text/javascript"  th:src="@{/jquery/Chart.bundle.min.js}" ></script>
+    <script  type="text/javascript" th:src="@{/jquery/chart-js-config.js}"></script>
+         <script  type="text/javascript"  th:src="@{/jquery/jquery-3.3.1.js}"></script>
+        <script  type="text/javascript"  th:src="@{/jquery/jquery-3.3.1.min.js}"></script>
+        <script  type="text/javascript"  th:src="@{/jquery/datatables.min.js}"></script>
+     <script  type="text/javascript"  th:src="@{/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <script  type="text/javascript" th:src="@{/jquery/spur.js}"></script>
+    </head>
+
+    <!-- 封装一些公用方法以及扩展方法 -->
+    <head>
+        <script>
+            /**
+             * 拓展表单对象：用于将对象序列化为JSON对象
+             */
+            $.fn.serializeObject = function () {
+                var o = {};
+                var a = $(this).serializeArray();
+                $.each(a, function () {
+                    if (o[this.name]) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            };
+
+            /**
+             * 表单自动回显
+             * 依赖jqury
+             * 使用参考：$("#form1").form({"id":"112","username":"ff","password":"111","type":"admin"});
+             */
+            $.fn.form = function (data) {
+                var form = $(this);
+                for (var i in data) {
+                    var name = i;
+                    var value = data[i];
+                    if (name !== "" && value !== "") {
+                        valuAtion(name, value);
+                    }
+                }
+
+                function valuAtion(name, value) {
+                    if (form.length < 1) {
+                        return;
+                    }
+                    if (form.find("[name='" + name + "']").length < 1) {
+                        return;
+                    }
+                    var input = form.find("[name='" + name + "']")[0];
+                    if ($.inArray(input.type, ["text", "password", "hidden", "select-one", "textarea"]) > -1) {
+                        $(input).val(value);
+                    } else if (input.type === "radio" || input.type === "checkbox") {
+                        form.find("[name='" + name + "'][value='" + value + "']").attr("checked", true);
+                    }
+                }
+            };
+
+            /**
+             * 拓展jQuery对象：快速AJAX Delete删除
+             */
+            $.delete = function (url, params, callback) {
+                if (!params || typeof params === 'string') {
+                    throw new Error('Error Params：' + params);
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    contentType: 'application/json',//发送格式（JSON串）
+                    data: JSON.stringify(params),//发送参数（JSON串）
+                    success: function (result) {
+                        callback && callback(result);
+                    }
+                });
+            };
+
+            /**
+             * 常用工具方法
+             */
+            commonUtil = {
+                /**
+                 * 获取当前时间，并格式化输出为：2018-05-18 14:21:46
+                 */
+                getNowTime: function () {
+                    var time = new Date();
+                    var year = time.getFullYear();//获取年
+                    var month = time.getMonth() + 1;//或者月
+                    var day = time.getDate();//或者天
+
+                    var hour = time.getHours();//获取小时
+                    var minu = time.getMinutes();//获取分钟
+                    var second = time.getSeconds();//或者秒
+                    var data = year + "-";
+                    if (month < 10) {
+                        data += "0";
+                    }
+                    data += month + "-";
+                    if (day < 10) {
+                        data += "0"
+                    }
+                    data += day + " ";
+                    if (hour < 10) {
+                        data += "0"
+                    }
+
+
+                    data += hour + ":";
+                    if (minu < 10) {
+                        data += "0"
+                    }
+                    data += minu + ":";
+                    if (second < 10) {
+                        data += "0"
+                    }
+                    data += second;
+                    return data;
+                },
+
+            }
+        </script>
+
+    </head>
+
+    <!-- thymeleaf内联js-->
+    <head>
+        <script th:inline="javascript">
+            //项目根路径
+            // contextpath = /*[[@{/}]]*/'';
+            contextpath = [[${#request.getContextPath()}]];//应用路径
+        </script>
+    </head>
+</html>

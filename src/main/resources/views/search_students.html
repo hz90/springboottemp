@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <script th:replace="head::static"></script>
+    <title>spadmin</title>
+
+     <style>
+.loadingWrap{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:300;
+	background-image:url(./img/loading.gif);
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-color:#000;
+	background-color:rgba(0,0,0,0.5);
+	filter:alpha(opacity=50);
+}
+</style>
+
+</head>
+
+<body>
+    <div class="dash">
+
+
+<div  th:insert="./common :: #common_dash">
+</div>
+
+        <div class="dash-app">
+            <header th:insert="./common :: #common_header">
+            </header>
+            <main class="dash-content">
+                <div class="container-fluid">
+                    <h1 class="dash-title">Tables</h1>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card spur-card">
+                                <div class="card-header">
+                                    <div class="spur-card-icon">
+                                        <i class="fas fa-table"></i>
+                                    </div>
+                                    <div class="spur-card-title">student table</div>
+                                    <div class=""><button type="button" id="getAllStudent" class="btn btn-primary">getstudent</button></div>
+                                </div>
+                                   <div class="loadingWrap" id="tableStudentload_div" style="display:none">
+													<!-- <img th:src="@{/img/loading.gif}"/> -->
+                                </div>
+                                <div class="card-body " id="tableStudentdiv">
+
+                                    <table id="student_ser_table" class="table table-bordered  table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">stu_id</th>
+                                                <th scope="col">stu_name</th>
+                                                <th scope="col">stu_age</th>
+                                                <th scope="col">stu_sex</th>
+                                                <th scope="col">stu_class</th>
+                                                <th scope="col">stu_phone</th>
+                                                <th scope="col">stu_address</th>
+                                                <th scope="col">stu_qq</th>
+                                                <th scope="col">stu_comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <!-- START FOOTER DARK-->
+<footer th:insert="./common :: #common_footer">
+ </footer>
+<!-- START FOOTER DARK-->
+</body>
+<script type="text/javascript"  th:src="@{/js/search_students.js}"></script>
+</html>

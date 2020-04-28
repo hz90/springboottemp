@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script th:replace="head::static"></script>
+
+    <title>spAdmin</title>
+</head>
+
+<body>
+    <div class="form-screen">
+        <a href="index.html" class="spur-logo"><i class="fas fa-bolt"></i> <span>spAdmin</span></a>
+        <div class="card account-dialog">
+            <div class="card-header bg-primary text-white"> Please sign in </div>
+            <div class="card-body">
+                <form action="/login" id="loginForm" name="loginForm"  onsubmit="return checkForm()">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="userid" name="userid" placeholder="userid">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Remember me</label>
+                        </div>
+                    </div>
+                    <div class="account-dialog-actions">
+                        <button type="submit" class="btn btn-primary" id="signin">Sign in</button>
+                        <a class="account-dialog-link" href="signup.html">Create a new account</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- START FOOTER DARK-->
+<footer th:insert="./common :: #common_footer">
+ </footer>
+<!-- START FOOTER DARK-->
+</body>
+ <script type="text/javascript"  th:src="@{/js/login.js}"></script>
+</html>
